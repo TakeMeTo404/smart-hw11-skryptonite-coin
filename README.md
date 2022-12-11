@@ -1,13 +1,28 @@
-# Sample Hardhat Project
+# ДЗ-11 "Создание своего токена". Аналитическая записка
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+В Solidity есть специальные переменные и функции, которые всегда существуют в глобальном namespace. Их назначение состоит в том, чтобы предоставлять информацию о блокчейне. Msg, tx, block – одни из них.
 
-Try running some of the following tasks:
+## MSG (Message)
+- msg.sender (address) – адрес отправителя сообщения
+- msg.sig (bytes4) – 4 байта, способные идентифицировать вызываемую
+функцию
+- msg.value (uint) – число wei, отправленных с сообщением
+- msg.data (bytes calldata) – все данные сообщения, нельзя модифицировать
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
+## TX (Transaction)
+- tx.gasprice (uint) – цена за газ данной транзакции
+- tx.origin (address) - адрес отправителя транзакции
+
+## BLOCK
+- block.basefee (uint) – «базовая плата». Каждый блок имеет базовую плату. Чтобы иметь право быть включённым в блок, предлагаемая цена за газ должна быть как минимум равна base fee.
+- block.chainid (uint) – id цепи
+- block.coinbase (address payable) – адрес майнера текущего блока
+- block.difficulty (uint) – сложность текущего блока
+- block.gaslimit (uint) – лимит газа
+- block.number (uint) – номер блока
+- block.timestamp (uint) – текущее время в секундах
+
+### *Замечания*
+- Все свойства объекта msg могут меняться для разных внешних вызовов
+- Когда мы пользуемся тестовой сетью, то свойства объектов block.* и tx.* не указывают «реальные» данные блокчейна
+- Не следует использовать block.timestamp для генерации рандомных чисел
